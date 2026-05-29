@@ -19,7 +19,7 @@ class User(Base):
     # defines one to many relationship
     # back_populates: two way sync
     # allows user.posts
-    posts: Mapped[list[Post]] = relationship(back_populates="author")
+    posts: Mapped[list[Post]] = relationship(back_populates="author", cascade="all, delete-orphan")
 
     # for computed attribute
     @property

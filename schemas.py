@@ -10,6 +10,11 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     pass
 
+class UserUpdate(BaseModel):
+    username: str | None = Field(default=None, min_length=1, max_length=50)
+    email: EmailStr | None = Field(default=None, max_length= 120)
+    image_file: str | None = Field(default=None, min_length=1, max_length=200)
+
 # api responses have more fields than creation requests (like id, generated values etc)
 class UserResponse(UserBase):
     model_config = ConfigDict(from_attributes= True) # using this, pydantic can read object attr (user.id etc) not only dict
@@ -26,6 +31,10 @@ class PostBase(BaseModel):
 
 class PostCreate(PostBase):
     user_id: int        # ideally the authenticated user
+
+class PostUpdate(BaseModel):
+    title: str | None = Field(default=None, min_length=1, max_length=100)
+    content: str | None = Field(default=None, min_length=1)
 
 class PostResponse(PostBase):
     model_config = ConfigDict(from_attributes=True) # orm object conversion
